@@ -1,0 +1,71 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <thread>
+#include <chrono>
+
+using namespace std;
+
+// 스택 상태 출력 함수
+void printStack(stack<string> s) {
+    cout << "\n[현재 스택 상태 - TOP ↓]\n";
+    while (!s.empty()) {
+        cout << " | " << s.top() << "\n";
+        s.pop();
+    }
+    cout << " ------------\n";
+}
+
+// 애니메이션 효과 (딜레이)
+void delay() {
+    this_thread::sleep_for(chrono::milliseconds(800));
+}
+
+int main() {
+    // 1) stack 선언부터 시작
+    stack<string> st;
+
+    // 사용할 단어 목록
+    string words[] = {
+        "개나리", "알바", "나비", "케이크", "아메리카노",
+        "카페라떼", "디저트", "봄동", "조명", "바리스타", "잔디"
+    };
+
+    cout << "=== 스택 애니메이션 시작 ===\n";
+
+    // 2) push 연산
+    for (int i = 0; i < 10; i++) { // 크기 10 이하 유지
+        cout << "\n[Push] -> " << words[i] << "\n";
+        st.push(words[i]);
+        printStack(st);
+        delay();
+    }
+
+    // 3) top 연산
+    cout << "\n[Top 확인] 현재 TOP: " << st.top() << "\n";
+    delay();
+
+    // 4) pop 연산
+    cout << "\n[Pop 실행] -> " << st.top() << " 제거\n";
+    st.pop();
+    printStack(st);
+    delay();
+
+    // 남은 단어 하나 추가 (잔디)
+    cout << "\n[Push] -> " << words[10] << "\n";
+    st.push(words[10]);
+    printStack(st);
+    delay();
+
+    // 추가 pop 몇 번 실행
+    for (int i = 0; i < 3; i++) {
+        cout << "\n[Pop 실행] -> " << st.top() << " 제거\n";
+        st.pop();
+        printStack(st);
+        delay();
+    }
+
+    cout << "\n=== 애니메이션 종료 ===\n";
+
+    return 0;
+}
